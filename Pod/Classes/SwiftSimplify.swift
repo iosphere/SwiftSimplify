@@ -53,7 +53,7 @@ public class SwiftSimplify {
 	- returns: Returns an array of simplified points
 	*/
 	public class func simplify<T>(_ points: [T], tolerance: Float?, highQuality: Bool = false) -> [T] {
-		if points.count == 2 {
+		guard points.count > 1 else {
 			return points
 		}
 		// both algorithms combined for awesome performance
@@ -64,6 +64,10 @@ public class SwiftSimplify {
 	}
 	
 	private class func simplifyRadialDistance<T>(_ points: [T], tolerance: Float!) -> [T] {
+        guard points.count > 1 else {
+            return points
+        }
+
 		var prevPoint: T = points.first!
 		var newPoints: [T] = [prevPoint]
 		var point: T = points[1]
@@ -85,6 +89,10 @@ public class SwiftSimplify {
 	}
 	
 	private class func simplifyDouglasPeucker<T>(_ points: [T], tolerance: Float!) -> [T] {
+        guard points.count > 1 else {
+            return points
+        }
+
 		// simplification using Ramer-Douglas-Peucker algorithm
 		let last: Int = points.count - 1
 		var simplified: [T] = [points.first!]
